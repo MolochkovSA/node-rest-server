@@ -51,8 +51,8 @@ class Controller {
   delete(id) {
     if (!isNaN(+id)) {
       let foundIndex = this.#arr.findIndex((items) => items.id === +id)
-      let res = this.#arr.splice(foundIndex, 1)
-      if (res.length !== 0) {
+      if (foundIndex >= 0) {
+        let res = this.#arr.splice(foundIndex, 1)
         return 'data successfully deleted'
       } else {
         return 'invalid id'
