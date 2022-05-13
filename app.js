@@ -1,4 +1,5 @@
 import express from 'express'
+import { userRouter } from './users/router.js'
 
 const app = express()
 const port = 8080
@@ -29,25 +30,28 @@ app.use((req, res, next) => {
 //   next()
 // })
 
-//NRS-2: log request/respons
-app.use((req, res, next) => {
-  console.log(`
-Request:
-  Method: ${req.method}
-  URL: ${req.url}
-  Headers: ${JSON.stringify(req.headers)}
-  Query: ${JSON.stringify(req.query)}
-  Body:  ${req.body || 'не указано'}
-Respons:
-  Code: ${res.statusCode}
-  Headers: ${JSON.stringify(res.getHeaders())}
-  Body: ${res.body || 'не указано'}`)
-  // console.log(http.ServerResponse)
-  next()
-})
+//NRS-2: Log request/respons
+app.use(express.json())
+// app.use((req, res, next) => {
+//   console.log(`
+// Request:
+//   Method: ${req.method}
+//   URL: ${req.url}
+//   Headers: ${JSON.stringify(req.headers)}
+//   Query: ${JSON.stringify(req.query)}
+//   Body:  ${req.body.name}
+// Respons:
+//   Code: ${res.statusCode}
+//   Headers: ${JSON.stringify(res.getHeaders())}
+//   Body: ${res.body}`)
+//   next()
+// })
 
-//NRS-1: Implement hello world API
-app.get('/api/hello', (req, res, next) => {
+//NRS-4: Add userRouter with CRUD-operations
+app.use('/api/users', userRouter)
+
+//NRS-1: Implement hello world
+app.get('/api/hello*', (req, res, next) => {
   res.send('Hello World')
   next()
 })
