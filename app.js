@@ -1,7 +1,10 @@
 import express from 'express'
+import { userRouter } from './users/router.js'
 
 const app = express()
 const port = 8080
+
+app.use(express.json())
 
 //NRS-3: Request time by performance.now
 app.use((req, res, next) => {
@@ -43,7 +46,15 @@ Respons:
 //NRS-1: Implement hello world API
 app.get('/api/hello', (req, res, next) => {
   res.send('Hello World')
-  next()
+  // next()
+})
+
+//NRS-4: Add userRouter with CRUD-operations
+app.use('/api/users', userRouter)
+
+//error handler 404
+app.use(function (req, res, next) {
+  res.status(404).send('Not Found')
 })
 
 app.listen(port, () => {
