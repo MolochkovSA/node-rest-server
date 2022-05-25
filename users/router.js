@@ -1,19 +1,11 @@
 import express from 'express'
-import { Controller } from './controllers.js'
+import controller from './controllers.js'
 
 const userRouter = express.Router()
-const controller = new Controller()
-userRouter.get('/(:id)?*', (req, res) => {
-  res.json(controller.read(req.params.id))
-})
-userRouter.post('/*', (req, res) => {
-  res.end(controller.create(req.body))
-})
-userRouter.put('/(:id)?*', (req, res) => {
-  res.end(controller.update(req.params.id, req.body))
-})
-userRouter.delete('/(:id)?*', (req, res) => {
-  res.end(controller.delete(req.params.id))
-})
+userRouter.get('/', controller.getAll)
+userRouter.get('/:id', controller.getById)
+userRouter.post('/', controller.create)
+userRouter.put('/:id', controller.updateById)
+userRouter.delete('/:id', controller.deleteById)
 
 export { userRouter }
