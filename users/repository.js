@@ -1,41 +1,41 @@
 const usersMap = new Map()
 
-function create(req, res) {
+function create(data) {
   const id = `${Date.now()}${Math.random().toFixed(2) * 100}`
   const user = {
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
+    username: data.username,
+    password: data.password,
+    email: data.email,
   }
   usersMap.set(id, user)
-  return res.status(201).send({ [id]: user })
+  return { [id]: user }
 }
 
-function getAll(req, res) {
-  res.send(Object.fromEntries(usersMap.entries()))
+function getAll() {
+  return Object.fromEntries(usersMap.entries())
 }
 
-function getById(req, res) {
-  if (!usersMap.has(req.params['id'])) {
-    return res.status(400).send('invalid id')
+function getById(id) {
+  if (!usersMap.has(id)) {
+    throw new Error(`User not found by id: ${id}`)
   }
-  return res.send(usersMap.get(req.params['id']))
+  return usersMap.get(id)
 }
 
-function updateById(req, res) {
-  if (!usersMap.has(req.params['id'])) {
-    return res.status(400).send('invalid id')
+function updateById(id, data) {
+  if (!usersMap.has(id)) {
+    throw new Error(`User not found by id: ${id}`)
   }
-  const user = Object.assign(usersMap.get(req.params['id']), req.body)
-  usersMap.set(req.params['id'], user)
-  return res.send(user)
+  const user = Object.assign(usersMap.get(id), data)
+  usersMap.set(id, user)
+  return user
 }
 
-function deleteById(req, res) {
-  if (!usersMap.has(req.params['id'])) {
-    return res.status(400).send('invalid id')
+function deleteById(id) {
+  if (!usersMap.has(id)) {
+    throw new Error(`User not found by id: ${id}`)
   }
-  usersMap.delete(req.params['id'])
-  return res.status(204)
+  usersMap.delete(id)
 }
+
 export default { getAll, getById, create, updateById, deleteById }
