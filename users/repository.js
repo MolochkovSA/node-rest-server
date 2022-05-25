@@ -3,16 +3,17 @@ const usersMap = new Map()
 function create(data) {
   const id = `${Date.now()}${Math.random().toFixed(2) * 100}`
   const user = {
+    id: id,
     username: data.username,
     password: data.password,
     email: data.email,
   }
   usersMap.set(id, user)
-  return { [id]: user }
+  return { user }
 }
 
 function getAll() {
-  return Object.fromEntries(usersMap.entries())
+  return Array.from(usersMap.values())
 }
 
 function getById(id) {
