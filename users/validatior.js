@@ -1,6 +1,5 @@
 import Joi from 'joi'
-
-const sexValues = { male: 'male', female: 'female' }
+import { sexValues } from './constants.js'
 
 const schema = Joi.object({
   username: Joi.string().trim().alphanum().min(3).max(50).required(),
@@ -11,14 +10,23 @@ const schema = Joi.object({
     .required(),
   sex: Joi.string()
     .trim()
-    .valid(...Object.values(sexValues)),
+    .valid(...Object.values(sexValues))
+    .required(),
   email: Joi.string().trim().email().required(),
 })
+
+function ValidationError(res, error) {
+  const body = {
+    code: 'VALIDATION_ERROR',
+    params: error,
+  }
+  res.status(400).send(body)
+}
 
 function userValidation(req, res, next) {
   const { error, value } = schema.validate(req.body)
   if (error) {
-    res.status(418).send(error.details[0].message)
+    return ValidationError(res, error.details[0].message)
   } else {
     req.body = value
     next()
