@@ -6,30 +6,19 @@ const port = 8080
 
 app.use(express.json())
 
-//NRS-3: Request time by performance.now
-app.use((req, res, next) => {
-  req.start = performance.now()
-  res.on('finish', () => {
-    console.log(
-      `Request time: ${(performance.now() - req.start).toFixed(3)} ms`
-    )
-  })
-  next()
-})
-
 //NRS-2: Log request/respons
-let resBody
 app.use(function responseLogger(req, res, next) {
   const originalSendFunc = res.send.bind(res)
   res.send = function (body) {
-    resBody = body
+    res.locals.body = body
     return originalSendFunc(body)
   }
   next()
 })
 app.use((req, res, next) => {
-  console.log(
-    `Request:
+  res.on('finish', () => {
+    console.log(
+      `Request:
   Method: ${req.method}
   URL: ${req.url}
   Headers: ${JSON.stringify(req.headers)}
@@ -38,8 +27,20 @@ app.use((req, res, next) => {
 Respons:
   Code: ${res.statusCode}
   Headers: ${JSON.stringify(res.getHeaders())}
-  Body: ${resBody}`
-  )
+  Body: ${res.locals.body}`
+    )
+  })
+  next()
+})
+
+//NRS-3: Request time by performance.now
+app.use((req, res, next) => {
+  req.start = performance.now()
+  res.on('finish', () => {
+    console.log(
+      `Request time: ${(performance.now() - req.start).toFixed(3)} ms`
+    )
+  })
   next()
 })
 
