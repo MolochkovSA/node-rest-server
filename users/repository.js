@@ -6,6 +6,7 @@ function create(data) {
     id: id,
     username: data.username,
     password: data.password,
+    sex: data.sex,
     email: data.email,
   }
   usersMap.set(id, user)
