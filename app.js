@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   Headers: ${JSON.stringify(req.headers)}
   Query: ${JSON.stringify(req.query)}
   Body:  ${JSON.stringify(req.body)}
-Respons:
+Response:
   Code: ${res.statusCode}
   Headers: ${JSON.stringify(res.getHeaders())}
   Body: ${res.locals.body}`

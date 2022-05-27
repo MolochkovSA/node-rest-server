@@ -10,7 +10,7 @@ function create(data) {
     email: data.email,
   }
   usersMap.set(id, user)
-  return { user }
+  return user
 }
 
 function getAll() {
