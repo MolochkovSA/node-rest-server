@@ -5,7 +5,7 @@ const schema = Joi.object({
   username: Joi.string().trim().alphanum().min(3).max(50).required(),
   password: Joi.string()
     .trim()
-    .pattern(new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/))
+    .pattern(new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/))
     .min(8)
     .required(),
   sex: Joi.string()

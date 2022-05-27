@@ -1,6 +1,6 @@
 import express from 'express'
 import controller from './controllers.js'
-import userValidation from './validatior.js'
+import userValidation from './validator.js'
 
 const userRouter = express.Router()
 userRouter.get('/', controller.getAll)
