@@ -39,7 +39,9 @@ app.use((req, res, next) => {
   req.start = performance.now()
   res.on('finish', () => {
     console.log(
-      `Request time: ${(performance.now() - req.start).toFixed(3)} ms`
+      `${'*'.repeat(20)}${new Date().toLocaleString()} Request time: ${(
+        performance.now() - req.start
+      ).toFixed(3)} ms${'*'.repeat(20)}`
     )
   })
   next()
