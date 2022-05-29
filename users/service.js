@@ -28,7 +28,7 @@ async function create(userCreateModel) {
 async function updateById(id, data) {
   if (!mongoose.Types.ObjectId.isValid(id)) return new UserNotExistedError();
   const user = await userRepository.findById(id);
-  if (!user) return new Result(new UserNotExistedError());
+  if (!user) return new UserNotExistedError();
   return new Result(await userRepository.updateById(id, data));
 }
 
