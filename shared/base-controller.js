@@ -1,9 +1,8 @@
-import { NotExistedError, DuplicationError } from './errors/business-errors/index.js';
+import { NotExistedError, DuplicationError, BusinessError } from './errors/business-errors.js';
 import {
   NotExistedError as NotExistedHttpError,
   DuplicationError as DuplicationHttpError,
 } from './errors/http-errors.js';
-import BusinessError from './errors/business-errors/base-error.js';
 
 export default class BaseController {
   httpErrorsByErrorTypeObj = {

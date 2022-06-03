@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import userRepository from './repository.js';
 import Result from '../shared/result.js';
-import { NotExistedError } from '../shared/errors/business-errors/index.js';
-import { ExampleUserError } from './errors/business-errors/index.js';
+import { NotExistedError } from '../shared/errors/business-errors.js';
+import { ExampleUserError } from './errors/business-errors.js';
 
 
 const UserNotExistedError = Result.bind(this, new NotExistedError('User not found'));

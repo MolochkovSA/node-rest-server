@@ -1,4 +1,4 @@
-import BusinessError from '../../../shared/errors/business-errors/base-error.js';
+import { BusinessError } from '../../shared/errors/business-errors.js';
 
 export class ExampleUserError extends BusinessError{
   constructor(message) {

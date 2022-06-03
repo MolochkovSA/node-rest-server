@@ -2,7 +2,7 @@ import BaseController from '../shared/base-controller.js';
 import userService from './service.js';
 import HttpStatus from 'http-status';
 import UserView from './models/user-view.js';
-import { ExampleUserError } from './errors/business-errors/index.js';
+import { ExampleUserError } from './errors/business-errors.js';
 import { ExampleUserError as ExampleUserHttpError } from './errors/http-errors.js';
 
 const httpErrorsByErrorTypeObj = {
