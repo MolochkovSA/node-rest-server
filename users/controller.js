@@ -6,7 +6,8 @@ import { ExampleUserError } from './errors/business-errors.js';
 import { ExampleUserError as ExampleUserHttpError } from './errors/http-errors.js';
 
 const httpErrorsByErrorTypeObj = {
-  [ExampleUserError.name]: ExampleUserHttpError
+  [ExampleUserError.name]: ExampleUserHttpError,
+  // add new users errors handlers here...
 };
 
 class UserController extends BaseController {

@@ -8,6 +8,7 @@ export default class BaseController {
   httpErrorsByErrorTypeObj = {
     [NotExistedError.name]: NotExistedHttpError,
     [DuplicationError.name]: DuplicationHttpError
+    // add new common errors handlers here...
   };
 
   constructor(httpErrorsByErrorTypeObj) {
@@ -16,8 +17,8 @@ export default class BaseController {
     }
 
     this.httpErrorsByErrorTypeObj = {
-      ...httpErrorsByErrorTypeObj,
-      ...this.httpErrorsByErrorTypeObj
+      ...this.httpErrorsByErrorTypeObj,
+      ...httpErrorsByErrorTypeObj
     };
   }
 
