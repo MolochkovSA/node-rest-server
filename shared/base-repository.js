@@ -4,6 +4,8 @@ function isMongoSchema(obj){
   return obj.hasOwnProperty('schema') && obj.schema instanceof mongoose.Schema;
 }
 
+const isObjectId = mongoose.Types.ObjectId.isValid;
+
 export default class BaseRepository {
   dbSchema;
 
@@ -24,7 +26,7 @@ export default class BaseRepository {
   }
 
   findById = async (id) => {
-    return this.dbSchema.findById(id);
+    return isObjectId(id) && this.dbSchema.findById(id);
   }
 
   findOne = async (filter) => {
@@ -40,7 +42,7 @@ export default class BaseRepository {
   }
 
   updateById = async (id, userUpdateModel) => {
-    return this.dbSchema.findByIdAndUpdate(id, userUpdateModel, { new: true });
+    return isObjectId(id) && this.dbSchema.findByIdAndUpdate(id, userUpdateModel, { new: true });
   }
 
   updateOne = async (filter, userUpdateModel) => {
@@ -52,7 +54,7 @@ export default class BaseRepository {
   }
 
   deleteById = async (id) => {
-    return this.dbSchema.findByIdAndDelete(id);
+    return isObjectId(id) && this.dbSchema.findByIdAndDelete(id);
   }
 
   deleteOne = async (filter) => {

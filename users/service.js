@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import userRepository from './repository.js';
 import Result from '../shared/result.js';
 import { NotExistedError } from '../shared/errors/business-errors.js';
@@ -14,7 +13,6 @@ async function getAll() {
 }
 
 async function getById(id) {
-  if (!mongoose.Types.ObjectId.isValid(id)) return new UserNotExistedError();
   const user = await userRepository.findById(id);
   if (!user) return new UserNotExistedError();
   return new Result(user);
@@ -26,14 +24,12 @@ async function create(userCreateModel) {
 }
 
 async function updateById(id, data) {
-  if (!mongoose.Types.ObjectId.isValid(id)) return new UserNotExistedError();
   const user = await userRepository.findById(id);
   if (!user) return new UserNotExistedError();
   return new Result(await userRepository.updateById(id, data));
 }
 
 async function deleteById(id) {
-  if (!mongoose.Types.ObjectId.isValid(id)) return new UserNotExistedError();
   const user = await userRepository.findById(id);
   if (!user) return new UserNotExistedError();
   await userRepository.deleteById(id);
