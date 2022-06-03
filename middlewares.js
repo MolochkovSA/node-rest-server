@@ -1,4 +1,5 @@
 import { NODE_ENV } from './config.js';
+import HttpStatus from 'http-status';
 
 export function responseSendWrapper(req, res, next) {
   const originalSendFunc = res.send.bind(res)
@@ -41,6 +42,15 @@ export function queryTimeLogger(req, res, next) {
 
 export function routeNotFoundHandler (req, res) {
   res.status(404).send('Not Found');
+}
+
+export function bodyParserWrapper(bodyParserMiddleware) {
+  return (req, res, next) => bodyParserMiddleware(req, res, (err) => {
+    if (err) {
+      return res.status(err.status || HttpStatus.BAD_REQUEST).send(err.message);
+    }
+    next();
+  });
 }
 
 export function serverErrorHandler(err, req, res, next) {

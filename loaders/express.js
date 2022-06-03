@@ -1,6 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import {
+  bodyParserWrapper,
   queryLogger,
   queryTimeLogger,
   responseSendWrapper,
@@ -10,7 +11,7 @@ import {
 import { userRouter } from '../users/router.js';
 
 export function expressLoader(app) {
-  app.use(express.json());
+  app.use(bodyParserWrapper(express.json()));
   app.use(responseSendWrapper);
   app.use(queryLogger);
   app.use(queryTimeLogger);
