@@ -1,39 +1,35 @@
 import userRepository from './repository.js';
-import Result from '../shared/result.js';
 import { NotExistedError } from '../shared/errors/business-errors.js';
 import { ExampleUserError } from './errors/business-errors.js';
 
 
-const UserNotExistedError = Result.bind(this, new NotExistedError('User not found'));
+const UserNotExistedError = NotExistedError.bind(this, 'User not found');
 
 async function getAll() {
-  return new Result(new ExampleUserError('Example of a specific custom error for the user module only'))
-  const users = await userRepository.getAll();
-  return new Result(users);
+  throw new ExampleUserError('Example of a specific custom error for the user module only');
+  return await userRepository.getAll();
 }
 
 async function getById(id) {
   const user = await userRepository.findById(id);
-  if (!user) return new UserNotExistedError();
-  return new Result(user);
+  if (!user) throw new UserNotExistedError();
+  return user;
 }
 
 async function create(userCreateModel) {
-  const user = await userRepository.create(userCreateModel);
-  return new Result(user);
+  return await userRepository.create(userCreateModel);
 }
 
 async function updateById(id, data) {
   const user = await userRepository.findById(id);
-  if (!user) return new UserNotExistedError();
-  return new Result(await userRepository.updateById(id, data));
+  if (!user) throw new UserNotExistedError();
+  return await userRepository.updateById(id, data);
 }
 
 async function deleteById(id) {
   const user = await userRepository.findById(id);
-  if (!user) return new UserNotExistedError();
+  if (!user) throw new UserNotExistedError();
   await userRepository.deleteById(id);
-  return new Result();
 }
 
 export default {
